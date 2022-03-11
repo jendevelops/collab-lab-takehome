@@ -6,6 +6,7 @@ const App = () => {
   const [textInput, setTextInput] = useState('Here is some example text.');
   const [conversionMode, setConversionMode] = useState(conversionOptions.lowercase.value);
   const [textOutput, setTextOutput] = useState('');
+  const [textOutputStyle, setTextOutputStyle] = useState('result');
   const [transformError, setTransformError] = useState(null);
 
 
@@ -22,6 +23,7 @@ const App = () => {
     setTransformError(null); // previous submit errors are reset when a new request is submitted
     try{
       const transformedText = conversionOptions[conversionMode].textTransformFunction(textInput);
+      setTextOutputStyle(`result-${conversionMode} result`);
       setTextOutput(transformedText);
     } catch (err) {
       if(!textInput){
@@ -37,7 +39,7 @@ const App = () => {
   return (
     <div className="App">
       <header>
-        <h1>Career Lab text-case converter</h1>
+        <h1>Career Lab "Moody" message converter</h1>
       </header>
       <form onSubmit={handleSubmit}>
         <div className="form-control form-control__text">
@@ -61,7 +63,7 @@ const App = () => {
             checked={conversionMode === conversionOptions.lowercase.value}
             onChange={handleRadioChange}
           />
-          <label htmlFor="conversion-0">Convert text to lowercase</label>
+          <label htmlFor="conversion-0">{conversionOptions.lowercase.label}</label>
         </div>
         <div className="form-control form-control__radio">
           <input
@@ -72,12 +74,12 @@ const App = () => {
             checked={conversionMode === conversionOptions.uppercase.value}
             onChange={handleRadioChange}
           />
-          <label htmlFor="conversion-1">Convert text to uppercase</label>
+          <label htmlFor="conversion-1">{conversionOptions.uppercase.label}</label>
         </div>
         <button type="submit">Submit</button>
         <div className="form-control form-control__text u-mt-3">
           <label htmlFor="result">Converted text:</label>
-          <output id="result" className="result">{textOutput}</output>
+          <output id="result" className={textOutputStyle}>{textOutput}</output>
         </div>
       </form>
     </div>

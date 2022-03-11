@@ -43,6 +43,18 @@ form {
   white-space: pre;
 }
 
+.result-lowercase{
+  color: gray;
+  font-size: xx-small;
+  font-weight: lighter;
+}
+
+.result-uppercase{
+  color: #6E260E;
+  font-size: xx-large;
+  font-weight: bolder;
+}
+
 .u-mt-3 {
   margin-top: 3rem;
 }
