@@ -13,6 +13,10 @@ form {
   padding: 0 2rem;
 }
 
+.error {
+  color: #6E260E;
+}
+
 .form-control > * + *,
 .form-control__radio + .form-control__radio {
   margin-top: 0.5rem;

@@ -50,7 +50,7 @@ const App = () => {
             aria-invalid={transformError?"true":"false"}
             aria-errormessage="inputError"
           />
-          {transformError && <strong id="inputError" role="alert">{transformError}</strong>}
+          {transformError && <strong id="inputError" role="alert" className="error">{transformError}</strong>}
         </div>
         <div className="form-control form-control__radio">
           <input
