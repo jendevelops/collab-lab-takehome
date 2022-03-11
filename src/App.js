@@ -63,7 +63,7 @@ const App = () => {
             checked={conversionMode === conversionOptions.lowercase.value}
             onChange={handleRadioChange}
           />
-          <label htmlFor="conversion-0">{conversionOptions.lowercase.label}</label>
+          <label htmlFor="conversion-0">{`${conversionOptions.lowercase.label} (${conversionOptions.lowercase.description})`}</label>
         </div>
         <div className="form-control form-control__radio">
           <input
@@ -74,7 +74,7 @@ const App = () => {
             checked={conversionMode === conversionOptions.uppercase.value}
             onChange={handleRadioChange}
           />
-          <label htmlFor="conversion-1">{conversionOptions.uppercase.label}</label>
+          <label htmlFor="conversion-1">{`${conversionOptions.uppercase.label} (${conversionOptions.uppercase.description})`}</label>
         </div>
         <button type="submit">Submit</button>
         <div className="form-control form-control__text u-mt-3">
