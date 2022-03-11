@@ -1,10 +1,13 @@
 import './App.css';
 import React, { useState } from 'react';
+import { conversionOptions, errorMessages } from './utils';
 
 const App = () => {
   const [textInput, setTextInput] = useState('Here is some example text.');
-  const [conversionMode, setConversionMode] = useState('lowercase');
+  const [conversionMode, setConversionMode] = useState(conversionOptions.lowercase.value);
   const [textOutput, setTextOutput] = useState('');
+  const [transformError, setTransformError] = useState(null);
+
 
   const handleRadioChange = event => {
     setConversionMode(event.target.value);
@@ -16,7 +19,19 @@ const App = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    setTextOutput('Your formatted text will go here!')
+    setTransformError(null); // previous submit errors are reset when a new request is submitted
+    try{
+      const transformedText = conversionOptions[conversionMode].textTransformFunction(textInput);
+      setTextOutput(transformedText);
+    } catch (err) {
+      if(!textInput){
+        // returns a specific error if input is empty
+        setTransformError(errorMessages.emptyInput);
+      } else {
+        // generic message for all other errors
+        setTransformError(errorMessages.default);
+      }
+    }
   };
 
   return (
@@ -31,15 +46,19 @@ const App = () => {
             id="text"
             onChange={handleTextareaChange}
             value={textInput}
+            aria-required="true"
+            aria-invalid={transformError?"true":"false"}
+            aria-errormessage="inputError"
           />
+          {transformError && <strong id="inputError" role="alert">{transformError}</strong>}
         </div>
         <div className="form-control form-control__radio">
           <input
             type="radio"
             name="conversion"
             id="conversion-0"
-            value="lowercase"
-            checked={conversionMode === "lowercase"}
+            value={conversionOptions.lowercase.value}
+            checked={conversionMode === conversionOptions.lowercase.value}
             onChange={handleRadioChange}
           />
           <label htmlFor="conversion-0">Convert text to lowercase</label>
@@ -49,16 +68,16 @@ const App = () => {
             type="radio"
             name="conversion"
             id="conversion-1"
-            value="uppercase"
-            checked={conversionMode === "uppercase"}
+            value={conversionOptions.uppercase.value}
+            checked={conversionMode === conversionOptions.uppercase.value}
             onChange={handleRadioChange}
           />
           <label htmlFor="conversion-1">Convert text to uppercase</label>
         </div>
-        <button type="button">Submit</button>
+        <button type="submit">Submit</button>
         <div className="form-control form-control__text u-mt-3">
           <label htmlFor="result">Converted text:</label>
-          <output id="result" class="result">{textOutput}</output>
+          <output id="result" className="result">{textOutput}</output>
         </div>
       </form>
     </div>
